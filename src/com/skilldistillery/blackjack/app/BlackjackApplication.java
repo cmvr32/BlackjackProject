@@ -18,8 +18,9 @@ public class BlackjackApplication {
 		GamePlay gp = new GamePlay();
 		Deck deck = new Deck();
 		deck.shuffle();
-
+		boolean keepGoing = true;
 		Scanner sc = new Scanner(System.in);
+		do {
 		printLaunchMenu();
 		int userInput = sc.nextInt();
 
@@ -27,8 +28,10 @@ public class BlackjackApplication {
 			gp.run();
 		} else {
 			printQuitScreen();
-		}
+			keepGoing = false;
 
+		}
+		} while (keepGoing);
 	}
 
 	private void printLaunchMenu() {

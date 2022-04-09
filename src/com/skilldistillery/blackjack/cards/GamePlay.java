@@ -5,7 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import com.skilldistillery.blackjack.app.BlackjackApplication;
+
 public class GamePlay {
+	BlackjackApplication bjapp = new BlackjackApplication();
 
 	public void run() {
 		Scanner sc = new Scanner(System.in);
@@ -14,22 +17,22 @@ public class GamePlay {
 		Deck deck = new Deck();
 		deck.shuffle();
 
-		System.out.print("Dealing first card to player: ");
+		System.out.print("1st card dealt to player: ");
 		Card c = deck.dealCard();
 		player.addCard(c);
 		System.out.print(c);
 
-		System.out.print("\nDealing first card to dealer: ");
+		System.out.print("\n1st card dealt to dealer: ");
 		c = deck.dealCard();
 		dealer.addCard(c);
 		System.out.print(c);
 
-		System.out.print("\nDealing second card to player: ");
+		System.out.print("\n2nd card dealt to player: ");
 		c = deck.dealCard();
 		player.addCard(c);
 		System.out.print(c);
 
-		System.out.print("\nDealing second card to dealer: ");
+		System.out.print("\n2nd card dealt to dealer: ");
 		c = deck.dealCard();
 		dealer.addCard(c);
 		System.out.print("[?] \n");
@@ -38,6 +41,14 @@ public class GamePlay {
 		System.out.println("Players hand is valued at: " + player.getHandValue());
 		System.out.println("Dealers hand is valued at: " + dealer.firstCardValue() + " + [?] ");
 		System.out.println("=======================================");
+
+		if (player.getHandValue() == 21) {
+			printWinnerMessage();
+		}
+
+		if (dealer.getHandValue() == 21) {
+			printLoserMessage();
+		}
 
 		printHitOrStay();
 
@@ -48,8 +59,8 @@ public class GamePlay {
 
 			switch (userInput) {
 
-			case 1: // hit
-				System.out.print("Dealing another card to player: ");
+			case 1:
+				System.out.print("New card dealt to player: ");
 				c = deck.dealCard();
 				player.addCard(c);
 				System.out.print(c + "\n");
@@ -60,25 +71,28 @@ public class GamePlay {
 				System.out.println("=======================================");
 
 				if (player.getHandValue() > 21) {
-
 					printLoserMessage();
 					keepGoing = false;
 				} else {
-				printHitOrStay();
+					printHitOrStay();
 				}
 				break;
 
-			case 2: // stay
+			case 2:
 
 				keepGoing = false;
+				dealerTurn(dealer, player, deck, c);
 				break;
-				
+
 			default:
 				System.out.println("Invalid entry");
-
+				break;
 			}
 
 		} while (keepGoing);
+	}
+	
+	public void dealerTurn(Dealer dealer, Player player, Deck deck, Card c) {
 
 		System.out.println("\n=======================================");
 		System.out.println("          Dealers turn...              ");
@@ -87,7 +101,11 @@ public class GamePlay {
 		while (dealer.getHandValue() < 17) {
 			c = deck.dealCard();
 			dealer.addCard(c);
-			System.out.println("Dealers hand is valued at: " + dealer.getHandValue());
+			System.out.println("The dealer was dealt: " + c);
+		}
+
+		if (dealer.getHandValue() >= 17) {
+			System.out.println("\nDealers hand is valued at or above 17 \nTherfore no additional cards dealt");
 		}
 
 		if (player.getHandValue() > dealer.getHandValue() && player.getHandValue() < 22) {
@@ -106,14 +124,15 @@ public class GamePlay {
 			printLoserMessage();
 		}
 
-		if (player.getHandValue() == dealer.getHandValue() ||(player.getHandValue() > 21 && dealer.getHandValue() > 21) ) {
+		if (player.getHandValue() == dealer.getHandValue()
+				|| (player.getHandValue() > 21 && dealer.getHandValue() > 21)) {
 			System.out.println("\n=======================================");
 			System.out.println("Players hand is valued at: " + player.getHandValue());
 			System.out.println("Dealers hand is valued at: " + dealer.getHandValue());
 			System.out.println("=======================================");
-			System.out.println("it's a tie");
+			printTiedMessage();
 		}
-		
+
 		if (player.getHandValue() < 22 && dealer.getHandValue() > 21) {
 			System.out.println("\n=======================================");
 			System.out.println("Players hand is valued at: " + player.getHandValue());
@@ -131,13 +150,6 @@ public class GamePlay {
 
 	}
 
-	private void printHandAndValue(List<Card> hand, int value) {
-		for (Card card : hand) {
-			System.out.println(card);
-		}
-		System.out.println("Total value: " + value);
-	}
-
 	private static void printHitOrStay() {
 		System.out.println("");
 		System.out.println("============== Your Move ==============");
@@ -150,6 +162,7 @@ public class GamePlay {
 
 	}
 
+	
 	private void printWinnerMessage() {
 		System.out.println("");
 		System.out.println("=======================================");
@@ -158,6 +171,7 @@ public class GamePlay {
 		System.out.println("=                                     =");
 		System.out.println("=======================================");
 		System.out.println("");
+//		bjapp.run();
 	}
 
 	private void printLoserMessage() {
@@ -168,5 +182,17 @@ public class GamePlay {
 		System.out.println("=                                     =");
 		System.out.println("=======================================");
 		System.out.println("");
+//		bjapp.run();
+	}
+
+	private void printTiedMessage() {
+		System.out.println("");
+		System.out.println("=======================================");
+		System.out.println("=                                     =");
+		System.out.println("=      You and the dealer tied.       =");
+		System.out.println("=                                     =");
+		System.out.println("=======================================");
+		System.out.println("");
+//		bjapp.run();
 	}
 }
