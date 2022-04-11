@@ -1,6 +1,5 @@
 package com.skilldistillery.blackjack.app;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.skilldistillery.blackjack.cards.Deck;
@@ -25,7 +24,7 @@ public class BlackjackApplication {
 		int userInput = sc.nextInt();
 
 		if (userInput == 1) {
-			gp.run();
+			gp.gamePlay();
 		} else {
 			printQuitScreen();
 			keepGoing = false;
@@ -55,4 +54,4 @@ public class BlackjackApplication {
 		System.out.println("");
 	}// printQuitScreen
 
-}// class
+}

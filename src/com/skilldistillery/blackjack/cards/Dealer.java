@@ -1,7 +1,7 @@
 package com.skilldistillery.blackjack.cards;
 
 public class Dealer {
-	
+
 	private Hand hand;
 
 	public Dealer() {
@@ -16,17 +16,19 @@ public class Dealer {
 	public void setHand(Hand hand) {
 		this.hand = hand;
 	}
-	
+
 	public void addCard(Card card) {
 		hand.addCard(card);
 	}
-	
-	public int getHandValue () {
+
+	public int getHandValue() {
 		return hand.getHandValue();
 	}
-	
+
 	public int firstCardValue() {
-		//hand.getHand().get(0);
+		// hand.getHand().get(0);
 		return hand.getHand().get(0).getValue();
 	}
+
+	
 }

@@ -1,8 +1,5 @@
 package com.skilldistillery.blackjack.cards;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.blackjack.app.BlackjackApplication;
@@ -10,7 +7,7 @@ import com.skilldistillery.blackjack.app.BlackjackApplication;
 public class GamePlay {
 	BlackjackApplication bjapp = new BlackjackApplication();
 
-	public void run() {
+	public void gamePlay() {
 		Scanner sc = new Scanner(System.in);
 		Player player = new Player();
 		Dealer dealer = new Dealer();
@@ -43,10 +40,18 @@ public class GamePlay {
 		System.out.println("=======================================");
 
 		if (player.getHandValue() == 21) {
+			System.out.println("\nWow! You scored 21 on the first deal!");
+			System.out.println("That's an automatic win!");
+			System.out.println("Dealers hand: " + dealer.firstCardValue() + c);
+			System.out.println("");
 			printWinnerMessage();
 		}
 
 		if (dealer.getHandValue() == 21) {
+			System.out.println("\nThe dealer scored 21 on the first deal!");
+			System.out.println("That's an automatic win for them.");
+			System.out.println("Dealers hand: " + dealer.firstCardValue() + c);
+			System.out.println("");
 			printLoserMessage();
 		}
 
@@ -90,8 +95,10 @@ public class GamePlay {
 			}
 
 		} while (keepGoing);
+
+		
 	}
-	
+
 	public void dealerTurn(Dealer dealer, Player player, Deck deck, Card c) {
 
 		System.out.println("\n=======================================");
@@ -162,7 +169,6 @@ public class GamePlay {
 
 	}
 
-	
 	private void printWinnerMessage() {
 		System.out.println("");
 		System.out.println("=======================================");
